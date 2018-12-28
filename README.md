@@ -1,2 +1,2 @@
 # learning-graphql
-A demo graphql application built with nodejs
+A demo GraphQL application built with nodejs
