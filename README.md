@@ -2,7 +2,7 @@
 
 ## What is GraphQL?
 
-[GraphQL](https://graphql.org/) is an open-source query language developed by Facebook. It provides us with a more efficient way design, create, and consume our APIs. Basically, it’s the replacement for REST.  
+[GraphQL](https://graphql.org/) is an open-source query language developed by Facebook. It provides us with a more efficient way design, create, and consume our APIs. Basically, it’s the *replacement* for REST.  
 
 ### Schema
 
