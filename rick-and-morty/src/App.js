@@ -1,40 +1,6 @@
 import React, { Component } from 'react';
-
-const GET_STUFF = `{
-  characters{
-    info{
-      count
-      pages
-    }
-    results{
-      name
-      id
-      image
-      location{
-        name
-        dimension
-      }
-      species
-      gender
-      status
-      origin{
-        name
-      }
-    }
-  }
-  episodes{
-    results{
-      name
-      air_date
-      id
-      characters{
-          name
-        	image
-      }
-      episode
-    }
-  }
-}`
+import Character from './Character';
+// import ReactDOM from 'react-dom'
 
 
 class App extends Component {
@@ -43,32 +9,99 @@ class App extends Component {
     super(props)
     this.state = {
       characters: [],
-      episodes: []
+      page: 1
     }
   }
 
-  componentDidMount(){
+  fetchCharacters = (id) => {
     fetch('https://rickandmortyapi.com/graphql', {
       method: 'POST', 
       mode: 'cors',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({query: GET_STUFF})
+      body: JSON.stringify({
+        query: `
+          query{
+            characters(page:${id}){
+              results{
+                name
+                id
+                image
+                location{
+                  name
+                  dimension
+                }
+                species
+                gender
+                status
+                origin{
+                  name
+                }
+              }
+            }
+          }
+        `})
     })
     .then(res => res.json())
     .then(data => {
       let characters = data.data.characters
-      let episodes = data.data.episodes
       this.setState({
-        characters: characters.results, 
-        episodes: episodes.results
+        characters: characters.results
       })
     })
+  } 
+
+  nextPage = () => {
+    this.setState((prev) => ({page: prev.page + 1 < 25 ? prev.page + 1 : 1}))
+  }
+
+  prevPage = () => {
+    this.setState((prev) => ({page: prev.page - 1 > 0 ? prev.page - 1 : 25}))
+  }
+
+  componentDidMount(){
+    this.fetchCharacters(this.state.page)
+  }
+
+  componentDidUpdate(prevState){
+    if(prevState.page !== this.state.page){
+      this.fetchCharacters(this.state.page)
+    }
   }
 
   render() {
+    const { characters } = this.state
     return (
       <div className="App">
-        hi
+        
+        <div className="container">
+          <p>
+            Page {this.state.page}
+          </p>
+          <div className="row">
+            {characters && characters.map(character => (
+              <Character 
+              key={character.id}
+              id={character.id}
+              name={character.name}
+              image={character.image}
+              location={character.location}
+              status={character.status}
+              origin={character.origin}
+              gender={character.gender}
+              />
+            ))}
+          </div>
+          <div className="page-btns">
+            <button
+            onClick={this.prevPage}>
+              Previous Page
+            </button>
+            <button
+            onClick={this.nextPage}>
+              Next Page
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
