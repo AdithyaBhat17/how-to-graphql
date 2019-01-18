@@ -1,11 +1,15 @@
 import React from 'react'
+import Navbar from './Navbar';
 
 export default class CharacterDetails extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             character: [],
-            loading: true
+            loading: false,
+            origin: '',
+            episode: [],
+            location: ''
         }
     }
 
@@ -44,52 +48,64 @@ export default class CharacterDetails extends React.Component{
         .then(res => res.json())
         .then(data => {
             let character = data.data.character
-            this.setState({character, loading: false})
+            let episode = data.data.character.episode 
+            let location = data.data.character.location.name 
+            let origin = data.data.character.origin.name
+            this.setState({
+                character,
+                loading: false,
+                episode,
+                location,
+                origin
+            })
         })
     }
 
     render(){
-        const { character, loading } = this.state
+        const { character, loading, episode, location, origin } = this.state
         if(loading === true)
             return <div>loading...</div>
         return(
             <div className="character-details">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6 col-sm-12">
-                            <div className="thumbnail">
-                                <img src={character.image} alt={character.name}/>
+                <Navbar />
+                {character && (
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6 col-sm-12">
+                                <div className="thumbnail">
+                                    <img src={character.image} alt={character.name}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-md-6 col-sm-12">
-                            <div className="details">
-                                <p>
-                                    <strong>Name:</strong> {character.name}
-                                </p>
-                                <p>
-                                    <strong>Gender:</strong> {character.gender}
-                                </p>
-                                <p>
-                                    <strong>Species:</strong> {character.species}
-                                </p>
-                                <p>
-                                    <strong>Status:</strong> {character.status}
-                                </p>
-                                <p>
-                                    <strong>Origin:</strong> {character.origin.name}
-                                </p>
-                                <p>
-                                    <strong>Current Location:</strong> {character.location.name}
-                                </p>
-                                <p>
-                                    <strong>Episodes:</strong> {character.episode.map(episode => (
-                                        <span key={episode.id}>{episode.name} ({episode.episode}), </span>
-                                    ))}
-                                </p>
+                            <div className="col-md-6 col-sm-12">
+                                <div className="details"> <br/>
+                                    <p>
+                                        <strong>Name:</strong> {character.name}
+                                    </p>
+                                    <p>
+                                        <strong>Gender:</strong> {character.gender}
+                                    </p>
+                                    <p>
+                                        <strong>Species:</strong> {character.species}
+                                    </p>
+                                    <p>
+                                        <strong>Status:</strong> {character.status}
+                                    </p>
+                                    <p>
+                                        <strong>Origin:</strong> {origin}
+                                    </p>
+                                    <p>
+                                        <strong>Current Location:</strong> {location}
+                                    </p>
+                                    <p>
+                                        <strong>Episodes:</strong> {episode.map(episode => (
+                                            <span key={episode.id}>{episode.name} ({episode.episode}), </span>
+                                        ))}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         )
     }
