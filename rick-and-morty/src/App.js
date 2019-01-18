@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Character from './Character';
+import Navbar from './Navbar';
 // import ReactDOM from 'react-dom'
 
 
@@ -58,7 +59,7 @@ class App extends Component {
     this.setState((prev) => ({page: prev.page - 1 > 0 ? prev.page - 1 : 25}))
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.fetchCharacters(this.state.page)
   }
 
@@ -72,7 +73,7 @@ class App extends Component {
     const { characters } = this.state
     return (
       <div className="App">
-        
+        <Navbar />
         <div className="container">
           <p>
             Page {this.state.page}
