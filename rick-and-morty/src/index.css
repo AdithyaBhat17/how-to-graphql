@@ -1,11 +1,47 @@
+@font-face {
+  src: url('./fonts/adultswim.ttf');
+  font-family: adultswim;
+}
+
+@font-face {
+  src: url('./fonts/rickandmorty.ttf');
+  font-family: rickandmorty;
+}
+
+@font-face {
+  src: url('./fonts/getswifty.ttf');
+  font-family: getswifty;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: adultswim;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar-brand{
+  font-family: getswifty;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.navbar-light .navbar-toggler {
+  color: rgba(0,0,0,.5);
+  border: none !important
+}
+
+.navbar-nav>li>a{
+  font-size: 18px;
+}
+
+.navbar{
+  padding: 10px 0;
+}
+
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,<svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h12M4 15h18M4 23h14 '/></svg>");
 }
 
 code {
@@ -28,10 +64,13 @@ img{
   width: 100%;
 }
 
+
+
 .char-link{
   display: flex;
   justify-content: space-between;
-  padding: 0 5px
+  padding: 0 5px;
+  color: #161743;
 }
 
 .page-btns{
@@ -46,4 +85,10 @@ img{
   border: 0;
   box-shadow: 5px 5px 25px 0 rgba(0,0,0,0.07);
   border-radius: 10px;
+}
+
+@media only screen and (max-width: 768px){
+  .navbar-brand{
+    font-size: 1.5em;
+  }
 }
