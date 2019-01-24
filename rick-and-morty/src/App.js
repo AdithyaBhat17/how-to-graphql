@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   fetchCharacters = (id) => {
-    fetch('https://rickandmortyapi.com/graphql', {
+    fetch('https://rickandmortyapi.com/graphql?no-cache=1', {
       method: 'POST', 
       mode: 'cors',
       headers: {'Content-Type': 'application/json'},
@@ -75,9 +75,9 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className="container">
-          <p>
+          <h3>
             Page {this.state.page}
-          </p>
+          </h3>
           <div className="row">
             {characters && characters.map(character => (
               <Character 
