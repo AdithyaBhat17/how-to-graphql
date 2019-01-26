@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
+import Episodes from './Episodes';
 
 
 
@@ -46,6 +47,14 @@ export default class Episode extends React.Component{
         })
       } 
 
+      nextPage = () => {
+        this.setState((prev) => ({page: prev.page + 1 < 2 ? prev.page + 1 : 1}))
+      }
+    
+      prevPage = () => {
+        this.setState((prev) => ({page: prev.page - 1 > 0 ? prev.page - 1 : 2}))
+      }
+
       componentWillMount(){
         this.fetchEpisodes(this.state.page)
       }
@@ -57,10 +66,37 @@ export default class Episode extends React.Component{
     }
 
     render(){
+      const {episodes} = this.state
         return(
             <div>
-                <Navbar />
-                <h1 style={{textAlign:'center'}}>hi, come back later, i'll fix this I promise!</h1>
+              <Navbar />
+              <div className="container">
+                <h3>
+                  Page {this.state.page} / 2
+                </h3>
+                <div className="row">
+                  {episodes && episodes.map(episode => (
+                    <Episodes 
+                    key={episode.id}
+                    id={episode.id}
+                    name={episode.name}
+                    episode={episode.episode}
+                    characters={episode.characters}
+                    airdate={episode.air_date}
+                    />
+                  ))}
+                </div>
+                <div className="page-btns">
+                  <button
+                  onClick={this.prevPage}>
+                    Previous Page
+                  </button>
+                  <button
+                  onClick={this.nextPage}>
+                    Next Page
+                  </button>
+                </div>
+              </div>
             </div>
         )
     }
