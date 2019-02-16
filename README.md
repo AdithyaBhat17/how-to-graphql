@@ -28,5 +28,9 @@ Types have fields, and these fields return a specific type of data. For example,
 
 https://developer.github.com/v4/explorer/
 
+## Sources to learn GraphQL
+
+https://www.howtographql.com/
+
 
 
